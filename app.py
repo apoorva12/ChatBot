@@ -3,8 +3,6 @@ import sys
 import json
 from datetime import datetime
 import random
-
-
 import requests
 from flask import Flask, request
 
@@ -21,6 +19,16 @@ def verify():
         return request.args["hub.challenge"], 200
 
     return "Hello world", 200
+
+def find_in_omdb(st):
+	api_key = '7fc5af0e'
+	site = 'http://www.omdbapi.com/?t='+st+'&apikey=7fc5af0e'
+	r = requests.get(site)
+	p = r.json()
+	if str(p['Response'])=='False':
+		return 'try again'
+	else:
+		return str(p['Year'])
 
 def generate(text):
 	qgreet=['hello','hi','hellooo','hey','heyy']
@@ -43,7 +51,7 @@ def generate(text):
 	elif msg in qwhatsup:
 		return random.choice(rwhatsup)
 	else:
-		return "Sorry! I can't understand."
+		return find_in_omdb(msg)
 	
 
 @app.route('/', methods=['POST'])
