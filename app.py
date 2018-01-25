@@ -26,7 +26,7 @@ def find_in_omdb(st):
 	r = requests.get(site)
 	p = r.json()
 	if str(p['Response'])=='False':
-		return 'try again'
+		return 'Try again! Ensure the spellings are correct.'
 	else:
 		return str(p['Year'])
 
